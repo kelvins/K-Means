@@ -21,6 +21,10 @@ private slots:
     void on_arquivoPushButton_clicked();
     void on_start1PushButton_clicked();
 
+    void on_salvarComoImagemPushButton_clicked();
+
+    void on_salvarCSVPushButton_clicked();
+
 private:
     void start();
     void plotaDados();
@@ -29,11 +33,16 @@ private:
 
 private:
     Ui::MainWindow *ui;
+
     QString filePath;
     int K;
+
     QVector<int> grupos;
     QVector<double> col1;
     QVector<double> col2;
+
+    QVector<int> resultado;
+
     KMeans kmeans;
 };
 

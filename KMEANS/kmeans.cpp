@@ -47,7 +47,7 @@ QVector<int> KMeans::KMEANS()
 
     QVector<int> positions;
 
-    for (int count = 0; count < 9999999; ++count)
+    for (int count = 0; count < 999999999; ++count)
     {
         for (int var = 0; var < col1.length(); ++var)
             distancia[var].clear();
@@ -61,6 +61,7 @@ QVector<int> KMeans::KMEANS()
         // 3º Passo: calcula a qual centróide pertence cada dado/ponto de acordo com a distância
         bool trocou = false; // Flag usada para saber se houve troca de grupo em algum dado
 
+        guardaGrupo.clear();
         for (int var = 0; var < K; ++var)
             grupo[var].clear();
 
@@ -93,6 +94,7 @@ QVector<int> KMeans::KMEANS()
                 }
             }
             grupo[position].append( var ); // Grava a posição do dado no grupo a que ele pertence
+            guardaGrupo.append(position);
         }
 
         if( trocou == false )
@@ -170,6 +172,11 @@ double KMeans::random(double valor1, double valor2)
     double f = (double)rand() / (RAND_MAX + 1.0);
     return valor1 + f * (valor2 - valor1);
 }
+QVector<int> KMeans::getGuardaGrupo() const
+{
+    return guardaGrupo;
+}
+
 int KMeans::getIteracoes() const
 {
     return iteracoes;

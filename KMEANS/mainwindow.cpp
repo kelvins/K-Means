@@ -45,8 +45,10 @@ void MainWindow::start()
         }
 
         grupos.clear();
+        resultado.clear();
 
-        grupos = kmeans.start(K, col1, col2);
+        grupos    = kmeans.start(K, col1, col2);
+        resultado = kmeans.getGuardaGrupo();
 
         mostraDados();
 
@@ -162,4 +164,44 @@ void MainWindow::mostraDados()
 
     ui->resultPlainText->appendPlainText( "\nNúmero de Iterações: " + QString::number( kmeans.getIteracoes() ));
 
+}
+
+void MainWindow::on_salvarComoImagemPushButton_clicked()
+{
+    QString filePath = QFileDialog::getSaveFileName(
+            new QWidget,
+            tr("Salvar Gráfico"),
+            "Grafico",
+            "Portable Network Graphics files (*.png)" );
+
+    if( filePath.isEmpty() )
+        return;
+
+    if( ui->plot->savePng(filePath) )
+        QMessageBox::information(this, "KMEANS", "Salvo com sucesso!");
+    else
+        QMessageBox::information(this, "KMEANS", "Não foi possível salvar, tente novamente!");
+}
+
+void MainWindow::on_salvarCSVPushButton_clicked()
+{
+    if( resultado.isEmpty() )
+        return;
+
+    QString filePath = QFileDialog::getSaveFileName(
+            new QWidget,
+            tr("Salvar Resultado"),
+            "",
+            "CSV files (*.csv)" );
+
+    QFile file( filePath ); // Tenta escrever o resultado no arquivo CSV
+    if( file.open( QFile::WriteOnly |QFile::Truncate ) )
+    {
+        QTextStream stream( &file );
+        stream << "K : " << K << "\n";
+        for (int temp = 0; temp < resultado.length(); ++temp)
+        {
+            stream << resultado.at(temp) << "\n";
+        }
+    }
 }

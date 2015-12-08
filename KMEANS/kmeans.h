@@ -25,6 +25,8 @@ public:
 
     int getIteracoes() const;
 
+    QVector<int> getGuardaGrupo() const;
+
 private:
     double achaMaximo(QVector<double> vetor);
     double achaMinimo(QVector<double> vetor);
@@ -40,6 +42,8 @@ private:
 
     QVector<double> col1;
     QVector<double> col2;
+
+    QVector<int> guardaGrupo;
 
     int iteracoes;
 };
